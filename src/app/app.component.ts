@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+// Definizione dell'oggetto Task
+interface Task {
+  text: string;
+  completed: boolean;
+  createdAt: Date;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -11,14 +18,19 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   title = 'TODO List';
-  tasks: string[] = ['Comprare il pane', 'Studiare Angular', 'Fare sport'];
+  tasks: Task[] = [];
   newTask: string = '';
+  filter: 'all' | 'completed' | 'pending' = 'all';
   
   // carica le tasks quando il componente viene avviato
   ngOnInit(){
     const savedTasks = localStorage.getItem('tasks');
     if (savedTasks){
-      this.tasks = JSON.parse(savedTasks);
+      // converte il JSON in un oggetto Task con un vero Date (altrimenti sarebbe una stringa)
+      this.tasks = JSON.parse(savedTasks).map((task: any) => ({
+        ...task,
+        createdAt: new Date(task.createdAt)
+      }))
     }
   }
 
@@ -27,10 +39,14 @@ export class AppComponent implements OnInit {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
-
+  // aggiunge una Task alla lista, evitando quelle vuote
   addTask() {
     if (this.newTask.trim() !== '') {
-      this.tasks.push(this.newTask.trim());
+      this.tasks.push({
+        text: this.newTask.trim(),
+        completed: false,
+        createdAt: new Date()
+      });
       this.newTask = '';
       this.saveTasks();
     }
@@ -42,5 +58,21 @@ export class AppComponent implements OnInit {
       this.tasks.splice(index, 1);
       this.saveTasks();
     }
+  }
+
+  // permette di aggiornare lo stato della Task
+  toggleCompleted(task: Task) {
+    task.completed = !task.completed;
+    this.saveTasks();
+  }
+
+  // filtra le task in base allo stato
+  get filteredTasks(): Task[] {
+    if (this.filter === 'completed') {
+      return this.tasks.filter(t => t.completed);
+    } else if (this.filter === 'pending') {
+      return this.tasks.filter(t => !t.completed);
+    }
+    return this.tasks;
   }
 }
