@@ -1,19 +1,26 @@
-input {
-    padding: 8px;
-    font-size: 16px;
-    margin-right: 8px;
+mat-card {
+    padding: 10px;
 }
 
-button {
-    padding: 8px 12px;
-    font-size: 16px;
+#task-box {
+    display: flex;
+    justify-content: center;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+mat-form-field {
+    margin-bottom: 10px;
 }
 
-li {
-    margin: 8px 0;
+h1 {
+    text-align: center;
+    color: pink;
+}
+
+#filter-buttons {
+    margin: 10px 0;
+    text-align: center;
+}
+
+mat-card-actions {
+    padding-left: 15px;
 }

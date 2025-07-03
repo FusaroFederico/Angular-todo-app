@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 // Definizione dell'oggetto Task
 interface Task {
@@ -12,7 +17,12 @@ interface Task {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatIconModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
