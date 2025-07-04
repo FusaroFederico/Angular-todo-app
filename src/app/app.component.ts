@@ -6,6 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './confirm-dialog.component';
+
 
 // Definizione dell'oggetto Task
 interface Task {
@@ -22,7 +28,9 @@ interface Task {
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,
-    MatIconModule],
+    MatIconModule,
+    MatSnackBarModule,
+    MatDialogModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -31,6 +39,12 @@ export class AppComponent implements OnInit {
   tasks: Task[] = [];
   newTask: string = '';
   filter: 'all' | 'completed' | 'pending' = 'all';
+
+  constructor(
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
+  
   
   // carica le tasks quando il componente viene avviato
   ngOnInit(){
@@ -59,15 +73,29 @@ export class AppComponent implements OnInit {
       });
       this.newTask = '';
       this.saveTasks();
+      this.snackBar.open('Attività aggiunta!', 'Chiudi', {
+        duration: 2000
+      });
     }
   }
 
   removeTask(index: number) {
-    // chiede conferma prima di rimuovere la task
-    if(confirm('Sei sicuor di voler rimuovere questa attività?')){
-      this.tasks.splice(index, 1);
-      this.saveTasks();
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        taskName: this.tasks[index].text
+      }
+    });
+    
+    // apre il dialog per chiedere conferma prima di rimuovere la task
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.tasks.splice(index, 1);
+        this.saveTasks();
+        this.snackBar.open('Attività rimossa', 'Chiudi', {
+          duration: 2000
+        });
+      }
+    });
   }
 
   // permette di aggiornare lo stato della Task
