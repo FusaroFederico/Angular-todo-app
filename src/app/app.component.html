@@ -13,6 +13,18 @@
     <button mat-button (click)="filter = 'completed'">Completate</button>
     <button mat-button (click)="filter = 'pending'">Da fare</button>
   </div>
+
+</mat-card>
+
+<mat-card style="margin-top: 10px;">
+  <mat-card-content style="text-align: center; color: rgb(227, 91, 113); display: flex; align-items: center; justify-content: center; gap: 8px;">
+    <span>Task da completare</span>
+    <mat-icon matBadge="{{ activeTaskCount }}" matBadgeColor="accent" matBadgeSize="medium"
+      aria-label="Task da completare">
+      assignment
+    </mat-icon>
+
+  </mat-card-content>
 </mat-card>
 
 <div *ngFor="let task of filteredTasks; let i = index" style="margin-top: 10px;">
@@ -32,4 +44,5 @@
       </button>
     </mat-card-actions>
   </mat-card>
+  
 </div>

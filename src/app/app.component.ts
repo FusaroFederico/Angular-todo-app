@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 // Definizione dell'oggetto Task
@@ -30,7 +31,8 @@ interface Task {
     MatCardModule,
     MatIconModule,
     MatSnackBarModule,
-    MatDialogModule],
+    MatDialogModule,
+    MatBadgeModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -113,4 +115,10 @@ export class AppComponent implements OnInit {
     }
     return this.tasks;
   }
+
+  // conta le task attive
+  get activeTaskCount(): number {
+    return this.tasks.filter(task => !task.completed).length;
+  }
+  
 }
