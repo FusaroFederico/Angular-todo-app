@@ -1,0 +1,9 @@
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+.created-at {
+    font-size: 0.8em;
+    color: #888;
+    margin-right: 5px;
+}

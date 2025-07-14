@@ -1,0 +1,6 @@
+<li [class.completed]="task.completed">
+    <input type="checkbox" [(ngModel)]="task.completed" (change)="onToggle()" />
+    {{ task.text }}
+    <span class="created-at">{{ task.createdAt | date: 'short' }}</span>
+    <button (click)="remove.emit()">Rimuovi</button>
+</li>

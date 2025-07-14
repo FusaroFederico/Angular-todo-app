@@ -20,29 +20,22 @@
   <mat-card-content style="text-align: center; color: rgb(227, 91, 113); display: flex; align-items: center; justify-content: center; gap: 8px;">
     <span>Task da completare</span>
     <mat-icon matBadge="{{ activeTaskCount }}" matBadgeColor="accent" matBadgeSize="medium"
-      aria-label="Task da completare">
+      aria-label="Task da completare" aria-hidden="false">
       assignment
     </mat-icon>
 
   </mat-card-content>
 </mat-card>
 
-<div *ngFor="let task of filteredTasks; let i = index" style="margin-top: 10px;">
-  <mat-card id="task-box">
-    <mat-card-content>
-      <mat-checkbox [(ngModel)]="task.completed" (change)="saveTasks()">
-        <span [style.textDecoration]="task.completed ? 'line-through' : 'none'">
-          {{ task.text }}
-        </span>
-        <small>{{ task.createdAt | date:'short' }}</small>
-      </mat-checkbox>
-        
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-icon-button color="warn" (click)="removeTask(i)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+<div style="margin-top: 10px;">
+  <ul>
+    <app-todo-item 
+      *ngFor="let task of filteredTasks; let i = index" 
+      [task]="task" 
+      (remove)="removeTask(i)"
+      (toggle)="updateTask(i)">
+    </app-todo-item>
+  </ul>
+  
   
 </div>
