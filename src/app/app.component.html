@@ -1,41 +1,11 @@
-<mat-card>
-  <h1>{{ title }}</h1>
-
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Nuova attività</mat-label>
-    <input matInput [(ngModel)]="newTask" />
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" (click)="addTask()">Aggiungi</button>
-
-  <div id="filter-buttons">
-    <button mat-button (click)="filter = 'all'">Tutte</button>
-    <button mat-button (click)="filter = 'completed'">Completate</button>
-    <button mat-button (click)="filter = 'pending'">Da fare</button>
-  </div>
-
-</mat-card>
-
-<mat-card style="margin-top: 10px;">
-  <mat-card-content style="text-align: center; color: rgb(227, 91, 113); display: flex; align-items: center; justify-content: center; gap: 8px;">
-    <span>Task da completare</span>
-    <mat-icon matBadge="{{ activeTaskCount }}" matBadgeColor="accent" matBadgeSize="medium"
-      aria-label="Task da completare" aria-hidden="false">
-      assignment
-    </mat-icon>
-
-  </mat-card-content>
-</mat-card>
-
-<div style="margin-top: 10px;">
-  <ul>
-    <app-todo-item 
-      *ngFor="let task of filteredTasks; let i = index" 
-      [task]="task" 
-      (remove)="removeTask(i)"
-      (toggle)="updateTask(i)">
-    </app-todo-item>
-  </ul>
-  
-  
-</div>
+<mat-toolbar color="primary">
+  <span>📋 TODO App</span>
+  <span class="spacer"></span>
+  <button mat-icon-button [routerLink]="['/']" aria-label="Home">
+    <mat-icon>home</mat-icon>
+  </button>
+  <button mat-icon-button [routerLink]="['/stats']" aria-label="Stats">
+    <mat-icon>bar_chart</mat-icon>
+  </button>
+</mat-toolbar>
+<router-outlet></router-outlet>
